@@ -14,7 +14,17 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-export default function DashboardLayout({children}:{children:React.ReactNode}) {
+export default function DashboardLayout({admin,customer,provider}:{
+
+  admin:React.ReactNode;
+  customer:React.ReactNode;
+  provider:React.ReactNode;
+}) {
+
+
+  const userInfo= {
+    role:'PROVIDER'
+  }
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -25,7 +35,9 @@ export default function DashboardLayout({children}:{children:React.ReactNode}) {
           
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
-          {children}
+        {
+          userInfo.role==='ADMIN'?admin:userInfo.role==='CUSTOMER'?customer:userInfo.role==='PROVIDER'?provider:null
+        }
         </div>
       </SidebarInset>
     </SidebarProvider>
