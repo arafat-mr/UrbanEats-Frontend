@@ -82,8 +82,9 @@ const Navbar = ({
   ],
   auth = {
     login: { title: "Login", url: "/login" },
-    signup: { title: "Sign up", url: "/register" },
+    signup: { title: "Sign up", url: "/signup" },
   },
+  
   className,
 }: Navbar1Props) => {
   return (
@@ -93,16 +94,18 @@ const Navbar = ({
         <nav className="hidden items-center justify-between lg:flex">
           <div className="flex items-center gap-6">
             {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
-              />
-              <span className="text-lg font-semibold tracking-tighter">
-                {logo.title}
-              </span>
-            </a>
+           <Link href='/' className="flex items-center justify-center gap-2">
+  <img
+    src="/food2.png"
+    className="max-h-8"
+    alt="food logo"
+  />
+  <span className="text-lg font-semibold tracking-tighter
+                   text-emerald-600 dark:text-emerald-400">
+    UrbanEats
+  </span>
+</Link>
+
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
@@ -126,13 +129,13 @@ const Navbar = ({
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
+            <Link href='/' className="flex items-center gap-2">
               <img
-                src={logo.src}
-                className="max-h-8 dark:invert"
-                alt={logo.alt}
+                src='./food2.png'
+                className="max-h-8 "
+                alt='food-logo'
               />
-            </a>
+            </Link>
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon">
@@ -142,13 +145,13 @@ const Navbar = ({
               <SheetContent className="overflow-y-auto">
                 <SheetHeader>
                   <SheetTitle>
-                    <a href={logo.url} className="flex items-center gap-2">
-                      <img
-                        src={logo.src}
-                        className="max-h-8 dark:invert"
-                        alt={logo.alt}
-                      />
-                    </a>
+                    <Link href='/' className="flex items-center gap-2">
+                       <img
+                src='./food2.png'
+                className="max-h-8 "
+                alt='food-logo'
+              />
+                    </Link>
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-6 p-4">

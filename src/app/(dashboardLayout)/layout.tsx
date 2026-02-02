@@ -23,11 +23,11 @@ export default function DashboardLayout({admin,customer,provider}:{
 
 
   const userInfo= {
-    role:'PROVIDER'
+    role:'ADMIN'
   }
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar user={userInfo} />
       <SidebarInset>
         <header className="bg-background sticky top-0 flex h-16 shrink-0 items-center gap-2 border-b px-4">
           <SidebarTrigger className="-ml-1" />
