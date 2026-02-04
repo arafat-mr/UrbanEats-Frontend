@@ -1,21 +1,17 @@
-import { Button } from "@/components/ui/button";
-import { UserService } from "@/services/user.service";
-import { cookies } from "next/headers";
+import MealCard from '@/components/Meals/MealCard';
+import NewMeals from '@/components/Meals/NewMeals';
+import { MealService } from '@/services/meal.service'
+import React from 'react'
 
-
-
-export default async function Home() {
+export default async function page() {
  
 
-  const {data,error}= await UserService.getSession()
-  
+  const {data}= await MealService.getMeals()
 
-  console.log('data is',data);
-  
   
   return (
-    <div >
-    <Button>Click here</Button>
+    <div>
+      <NewMeals meals={data.data}/>
     </div>
-  );
+  )
 }
