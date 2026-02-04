@@ -17,6 +17,7 @@ import { adminRoutes } from "@/routes/adminRoutes"
 import { customerRoutes } from "@/routes/customerRoutes"
 import { providerRoutes } from "@/routes/providerRoutes"
 import { Route } from "@/types"
+import { UserRole } from "@/types/enums"
 
 // This is sample data.
 const data = {
@@ -44,15 +45,15 @@ export function AppSidebar({user, ...props }:{user :{role:string} & React.Compon
   let routes :Route[]=[]
 
   switch (user.role) {
-    case 'ADMIN':
+    case UserRole.ADMIN:
       routes=adminRoutes
       
       break;
-    case 'CUSTOMER':
+    case UserRole.CUSTOMER:
       routes=customerRoutes
       
       break;
-    case 'PROVIDER':
+    case UserRole.PROVIDER:
       routes=providerRoutes
       
       break;
@@ -66,6 +67,11 @@ export function AppSidebar({user, ...props }:{user :{role:string} & React.Compon
      
       <SidebarContent>
         {/* We create a SidebarGroup for each parent. */}
+
+        <div className="w-full   flex justify-center items-center h-20">
+         <p>{user.role} DashBoard</p>
+
+        </div>
         {routes.map((item) => (
           <SidebarGroup key={item.title}>
             {/* <SidebarGroupLabel >{item.title}</SidebarGroupLabel> */}

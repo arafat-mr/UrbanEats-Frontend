@@ -6,11 +6,11 @@ import { Route } from "@/types";
       items: [
         {
           title: "Analytics",
-          url: "/dashboard/analytics",
+          url: "/dashboard/customer-analytics",
         },
         {
           title: "Profile",
-          url: "/dashboard/profile",
+          url: "/dashboard/customer-profile",
         },
         {
           title: "View Cart Itmes",
@@ -19,6 +19,10 @@ import { Route } from "@/types";
         {
           title: "View Orders",
           url: "/dashboard/orders",
+        },
+        {
+          title:"Back To Home",
+          url:'/'
         }
     
       ],
