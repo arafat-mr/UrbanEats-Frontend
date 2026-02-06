@@ -21,7 +21,7 @@ import { Route } from "@/types";
           url: "/dashboard/add-meals",
         },
         {
-          title: "My Meals",
+          title: "My Menu",
           url: "/dashboard/my-meals",
         },{
           title:"Back To Home",

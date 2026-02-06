@@ -45,6 +45,7 @@ export const Navbar = ({
   menu = [
     { title: 'Home', url: '/' },
     { title: 'Meals', url: '/meals' },
+    {title:'Providers',url:'/providers'},
     { title: 'Dashboard', url: '/dashboard' },
   ],
   className,

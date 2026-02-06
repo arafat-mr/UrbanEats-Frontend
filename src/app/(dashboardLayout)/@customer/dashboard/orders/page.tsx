@@ -95,7 +95,7 @@ export default function Orders() {
         <Card key={order.id} className="border rounded-xl">
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
-              <span>Order #{order.id}</span>
+              <span>Order #{order.id.slice(0,6)}</span>
              <span
   className={`font-semibold ${
     order.orderStatus === "PLACED"
@@ -118,6 +118,7 @@ export default function Orders() {
           </CardHeader>
 
           <CardContent>
+           
             <p>
               <b>Delivery Address:</b> {order.deliveryAddress}
             </p>
