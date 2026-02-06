@@ -13,20 +13,18 @@ import { Route } from "@/types";
           url: "/dashboard/admin-profile",
         },
         {
-          title: "Manage Customers",
+          title: "Manage Users",
           url: "/dashboard/users",
         },
-        {
-          title: "Manage Providers",
-          url: "/dashboard/providers",
-        },
-        {
-          title: "Manage Meals",
-          url: "/dashboard/meals",
-        },
+
         {
           title: "Manage Orders",
           url: "/dashboard/orders",
+        },
+        
+        {
+          title:'Manage Categories',
+          url:'/dashboard/manage-categories'
         },{
           title:"Back To Home",
           url:'/'

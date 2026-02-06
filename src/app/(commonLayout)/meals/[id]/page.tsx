@@ -1,75 +1,88 @@
 import { MealService } from "@/services/meal.service";
 import { UserService } from "@/services/user.service";
-import { redirect } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
 export default async function MealDetails({
-  params
+  params,
 }: {
   params: { id: string };
 }) {
-  const {id} = await params
+  const { id } = await params;
 
   const meal = await MealService.getMealById(id);
-  
-  //  console.log(session.data.token);
-  const handleCart=async(request:NextRequest)=>{
-    const session= await UserService.getSession()
-if(!session?.data?.token){
-  return NextResponse.redirect(new URL(('/login'),request.url))
-}
-}
-
- 
 
   if (!meal) {
-    return <div className="p-10">Meal not found ❌</div>;
+    return <div className="p-10 text-center text-xl">Meal not found ❌</div>;
   }
 
   return (
-    <div className="container mx-auto px-6 py-10">
-      <h1 className="text-3xl font-bold mb-4">{meal.name}</h1>
-      <p className="text-muted-foreground mb-2">
-        Provided by:{" "}
-        <span className="font-semibold text-primary">
-          {meal.provider?.user?.name ?? "Unknown Provider"}
-        </span>
-      </p>
-
-      <img
-        src={meal.image}
-        alt={meal.name}
-        className="w-full max-w-md rounded-xl mb-6"
-      />
-
-      <p className="mb-4">{meal.description}</p>
-
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        {/* Price and availability */}
-        <div className="flex items-center gap-4">
-          <span className="text-2xl font-bold text-primary">
-            BDT {meal.price}
-          </span>
-
-          <span
-            className={`font-medium ${
-              meal.isAvailable ? "text-green-500" : "text-red-500"
-            }`}
-          >
-            {meal.isAvailable ? "Available" : "Out of stock"}
-          </span>
+    <div className="container mx-auto px-6 py-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        {/* Image Section */}
+        <div className="w-full">
+          <img
+            src={meal.image}
+            alt={meal.name}
+            className="w-full h-[380px] object-cover rounded-2xl shadow-md"
+          />
         </div>
 
-        {/* Add to Cart button */}
-        <button
-          disabled={!meal.isAvailable}
-         
-          className="px-6 py-2 rounded-xl font-semibold transition-colors
-                     bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600
-                     disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Add to Cart
-        </button>
+        {/* Info Section */}
+        <div className="space-y-5">
+          <h1 className="text-3xl font-bold">{meal.name}</h1>
+
+          <p className="text-muted-foreground">
+            Provided by:{" "}
+            <span className="font-semibold text-primary">
+              {meal.provider?.user?.name ?? "Unknown Provider"}
+            </span>
+          </p>
+
+          <div className="flex items-center gap-4">
+            <span className="text-2xl font-bold text-primary">
+              BDT {meal.price}
+            </span>
+
+            <span
+              className={`text-sm font-medium px-3 py-1 rounded-full ${
+                meal.isAvailable
+                  ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                  : "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+              }`}
+            >
+              {meal.isAvailable ? "Available" : "Out of stock"}
+            </span>
+          </div>
+
+          <p className="text-base leading-relaxed">{meal.description}</p>
+
+          {/* Dietary Tags */}
+          {meal.dietaryTags?.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {meal.dietaryTags.map((tag: string) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 rounded-full text-xs font-medium bg-zinc-100 dark:bg-zinc-800"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Action */}
+          <div className="pt-4">
+            <button
+              disabled={!meal.isAvailable}
+              className="px-6 py-3 rounded-xl font-semibold transition-all
+                         bg-blue-600 text-white hover:bg-blue-700
+                         dark:bg-blue-500 dark:hover:bg-blue-600
+                         disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
