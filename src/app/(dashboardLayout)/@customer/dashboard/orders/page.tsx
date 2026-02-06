@@ -31,21 +31,30 @@ export default function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchOrders = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/orders/my-orders", {
-        credentials: "include",
-      });
-      const data = await res.json();
-      const ordersArray = Array.isArray(data) ? data : data?.data || [];
-      setOrders(ordersArray);
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to load orders");
-    } finally {
-      setLoading(false);
-    }
-  };
+ const fetchOrders = async () => {
+  try {
+    const res = await fetch("http://localhost:5000/orders/my-orders", {
+      credentials: "include",
+    });
+    const data = await res.json();
+    const ordersArray: Order[] = Array.isArray(data)
+      ? data
+      : data?.data || [];
+
+    // FILTER OUT CART ORDERS
+    const filteredOrders = ordersArray.filter(
+      (order) => order.orderStatus !== "CART"
+    );
+
+    setOrders(filteredOrders);
+  } catch (err) {
+    console.error(err);
+    toast.error("Failed to load orders");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   useEffect(() => {
     fetchOrders();
