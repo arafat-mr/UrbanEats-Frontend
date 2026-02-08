@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import { UserService } from "@/services/user.service";
 type Meal = {
   id: string;
   name: string;
@@ -27,20 +28,41 @@ type Meal = {
   image?: string;
 };
 
-export default function MyMeals() {
+export default  function MyMeals() {
   const [meals, setMeals] = useState<Meal[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedMeal, setSelectedMeal] = useState<Meal | null>(null);
-
+ 
   const fetchMeals = async () => {
+
+  
+
+
     try {
+       const user= await fetch('http://localhost:5000/api/me',{
+        method:"GET",
+        credentials:"include"
+       })
+  
+  const mySession= await user.json()
+
+  if(!mySession?.id){
+    return 
+  }
+  
       const res = await fetch(
-        "http://localhost:5000/api/provider/meals/myMeals",
+        `http://localhost:5000/api/provider/meals/myMeals/${mySession.id}`,
+
         {
+          method:"GET",
           credentials: "include",
         },
       );
+
       const data = await res.json();
+
+      console.log('data',data);
+      
       const mealsArray = Array.isArray(data) ? data : data?.data || [];
       setMeals(mealsArray);
     } catch {
@@ -85,44 +107,53 @@ export default function MyMeals() {
             </TableRow>
           </TableHeader>
 
-          <TableBody>
-            {meals.map((meal) => (
-              <TableRow key={meal.id}>
-                <TableCell>
-                  {meal.image ? (
-                    <img
-                      src={meal.image}
-                      alt={meal.name}
-                      className="w-12 h-12 rounded object-cover"
-                    />
-                  ) : (
-                    "N/A"
-                  )}
-                </TableCell>
-                <TableCell>{meal.name}</TableCell>
-                <TableCell>BDT {meal.price}</TableCell>
-                <TableCell className="max-w-xs truncate">
-                  {meal.description}
-                </TableCell>
-                <TableCell className="text-right space-x-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => setSelectedMeal(meal)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => handleDelete(meal.id)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+        <TableBody>
+  {loading ? (
+    <TableRow>
+      <TableCell colSpan={5} className="text-center py-10">
+        Loading meals...
+      </TableCell>
+    </TableRow>
+  ) : meals.length === 0 ? (
+    <TableRow>
+      <TableCell colSpan={5} className="text-center py-10 text-muted-foreground">
+        No meals added yet 🍽️  
+        <br />
+        Start by adding your first meal!
+      </TableCell>
+    </TableRow>
+  ) : (
+    meals.map((meal) => (
+      <TableRow key={meal.id}>
+        <TableCell>
+          {meal.image ? (
+            <img
+              src={meal.image}
+              alt={meal.name}
+              className="w-12 h-12 rounded object-cover"
+            />
+          ) : (
+            "N/A"
+          )}
+        </TableCell>
+        <TableCell>{meal.name}</TableCell>
+        <TableCell>BDT {meal.price}</TableCell>
+        <TableCell className="max-w-xs truncate">
+          {meal.description}
+        </TableCell>
+        <TableCell className="text-right space-x-2">
+          <Button size="sm" variant="outline" onClick={() => setSelectedMeal(meal)}>
+            Edit
+          </Button>
+          <Button size="sm" variant="destructive" onClick={() => handleDelete(meal.id)}>
+            Delete
+          </Button>
+        </TableCell>
+      </TableRow>
+    ))
+  )}
+</TableBody>
+
         </Table>
       </div>
 

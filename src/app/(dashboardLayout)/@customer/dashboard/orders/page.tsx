@@ -45,7 +45,7 @@ export default function Orders() {
     const filteredOrders = ordersArray.filter(
       (order) => order.orderStatus !== "CART"
     );
-
+  console.log('prders',filteredOrders);
     setOrders(filteredOrders);
   } catch (err) {
     console.error(err);
@@ -68,6 +68,8 @@ export default function Orders() {
       });
 
       const data = await res.json();
+      
+      
       if (!res.ok) throw new Error(data.message || "Failed to cancel order");
 
       toast.success("Order canceled successfully");
@@ -95,7 +97,7 @@ export default function Orders() {
         <Card key={order.id} className="border rounded-xl">
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
-              <span>Order #{order.id.slice(0,6)}</span>
+              <span>Order #{order.id.slice(0,7)}</span>
              <span
   className={`font-semibold ${
     order.orderStatus === "PLACED"

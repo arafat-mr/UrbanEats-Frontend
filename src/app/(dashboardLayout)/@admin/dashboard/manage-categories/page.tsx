@@ -11,6 +11,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
+import CategoryUpdateModal from '@/components/UpdateCategory'
+
 
 type Category = {
   id: string
@@ -22,6 +24,7 @@ export default function ManageCategories() {
   const [loading, setLoading] = useState(true)
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null)
   const PAGE_LIMIT = 10
 
   const fetchCategories = async (pageNumber: number = 1) => {
@@ -48,7 +51,24 @@ export default function ManageCategories() {
     fetchCategories(page)
   }, [page])
 
-  if (loading) return <p className="p-4 text-center">Loading categories...</p>
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this category?')) return
+    try {
+      const res = await fetch(`http://localhost:5000/api/admin/categories/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        toast.error(data.message || 'Delete failed')
+        return
+      }
+      toast.success('Category deleted ')
+      fetchCategories(page)
+    } catch {
+      toast.error('Delete failed')
+    }
+  }
 
   return (
     <div className="p-6 space-y-6 border rounded-md">
@@ -71,10 +91,18 @@ export default function ManageCategories() {
               <TableCell>{cat.id}</TableCell>
               <TableCell>
                 <div className="flex gap-2">
-                  <Button onClick={()=>toast.success('Feature coming soon...')} size="sm" variant="outline">
+                  <Button
+                    onClick={() => setSelectedCategory(cat)}
+                    size="sm"
+                    variant="outline"
+                  >
                     Edit
                   </Button>
-                  <Button onClick={()=>toast.success('Feature coming soon...')} size="sm" variant="destructive">
+                  <Button
+                    onClick={() => handleDelete(cat.id)}
+                    size="sm"
+                    variant="destructive"
+                  >
                     Delete
                   </Button>
                 </div>
@@ -93,7 +121,7 @@ export default function ManageCategories() {
         >
           Previous
         </Button>
-        <span className="self-center text-black dark:text-white">
+        <span className="self-center  text-black dark:text-white">
           Page {page} of {totalPages}
         </span>
         <Button
@@ -104,6 +132,15 @@ export default function ManageCategories() {
           Next
         </Button>
       </div>
+
+      {/* Use your existing update component as modal */}
+      {selectedCategory && (
+        <CategoryUpdateModal
+          category={selectedCategory}
+          onClose={() => setSelectedCategory(null)}
+          onUpdated={() => fetchCategories(page)}
+        />
+      )}
     </div>
   )
 }
