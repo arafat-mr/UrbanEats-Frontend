@@ -51,9 +51,9 @@ export default function MyOrders() {
       const ordersArray: Order[] = Array.isArray(data) ? data : data?.data || [];
 
       // Filter out CART orders
-      const filteredOrders = ordersArray.filter((order) => order.orderStatus !== "CART");
+      // const filteredOrders = ordersArray.filter((order) => order.orderStatus !== "CART");
 
-      setOrders(filteredOrders);
+      setOrders(ordersArray);
     } catch (err) {
       console.error(err);
       toast.error("Failed to load orders");
