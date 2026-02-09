@@ -35,7 +35,7 @@ export default async function MealsPage({
 
   return (
     <div className="container py-10 px-10 mx-auto">
-      <h1 className="text-3xl font-bold mb-6">All Meals 🍽️</h1>
+      <h1 className="text-3xl font-bold mb-6">All Meals</h1>
 
       {/* Filter Form */}
       <div className="mb-6">

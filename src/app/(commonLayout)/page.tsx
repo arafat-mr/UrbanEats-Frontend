@@ -1,3 +1,6 @@
+import Banner from '@/components/Banner';
+import FAQSection from '@/components/Faq';
+import HotDealsSection from '@/components/HotDeals';
 import MealCard from '@/components/Meals/MealCard';
 import NewMeals from '@/components/Meals/NewMeals';
 import { MealService } from '@/services/meal.service'
@@ -11,7 +14,10 @@ export default async function page() {
   
   return (
     <div>
+      <Banner/>
       <NewMeals meals={data.data}/>
+      <HotDealsSection/>
+      <FAQSection/>
     </div>
   )
 }
