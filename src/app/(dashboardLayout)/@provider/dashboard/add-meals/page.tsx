@@ -23,7 +23,7 @@ const categories = [
   { id: "bgdss", name: "Bengali" },
 ];
 
-const dietaryOptions = ["HALAL", "VEGETARIAN"];
+const dietaryOptions = ["HALAL", "VEGAN"];
 
 async function getMe() {
   const res = await fetch("http://localhost:5000/api/me", {
