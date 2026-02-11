@@ -50,10 +50,10 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      console.log("Submit clicked", value);
+      
 
 
-      console.log("👉 Call Better Auth signup API here");
+      
       const toastId = toast.loading("Creating user");
       try {
         const { data, error } = await authClient.signUp.email(value);
@@ -69,7 +69,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 
           try {
 
-             const res = await fetch(`http://localhost:5000/api/providers`, {
+             const res = await fetch(`https://urban-eats-backend.vercel.app/api/providers`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

@@ -79,7 +79,7 @@ export function AppSidebar({user, ...props }:{user :{role:string} & React.Compon
               <SidebarMenu>
                 {item.items.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild isActive={item.isActive}>
+                    <SidebarMenuButton asChild >
                       <Link href={item.url}>{item.title}</Link>
                     </SidebarMenuButton>
                    </SidebarMenuItem>

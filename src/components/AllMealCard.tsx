@@ -4,6 +4,7 @@ import { Meal } from "@/types/types";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 interface AllMealCardProps {
   meal: Meal;
@@ -14,7 +15,7 @@ export default function AllMealCard({ meal }: AllMealCardProps) {
     if (!meal.isAvailable) return;
 
     try {
-      const res = await fetch("http://localhost:5000/orders", {
+      const res = await fetch("https://urban-eats-backend.vercel.app/orders", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -32,7 +33,8 @@ export default function AllMealCard({ meal }: AllMealCardProps) {
       toast.success("Added to cart successfully!");
     } catch (err: any) {
       console.error(err);
-      toast.error(err.message || "Error adding to cart");
+      toast.error( "Error adding to cart ! Please login first");
+      // redirect('/login')
     }
   };
 

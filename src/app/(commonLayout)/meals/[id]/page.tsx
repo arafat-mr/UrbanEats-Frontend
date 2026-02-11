@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { toast } from "sonner";
 
 interface Meal {
@@ -44,7 +44,7 @@ export default function MealDetails() {
     if (!id) return;
     try {
       // 1. Fetch meal
-      const res = await fetch(`http://localhost:5000/api/provider/meals/${id}`, {
+      const res = await fetch(`https://urban-eats-backend.vercel.app/api/provider/meals/${id}`, {
         method: "GET",
         credentials: "include",
       });
@@ -54,7 +54,7 @@ export default function MealDetails() {
 
       // 2. Check if customer can review & get orderId
       const reviewCheck = await fetch(
-        `http://localhost:5000/reviews/can-review/${id}`,
+        `https://urban-eats-backend.vercel.app/reviews/can-review/${id}`,
         { credentials: "include" }
       );
       const reviewResult = await reviewCheck.json();
@@ -62,13 +62,12 @@ export default function MealDetails() {
       setOrderId(reviewResult.orderId ?? null); // store orderId
 
       // 3. Fetch existing reviews
-      const revRes = await fetch(`http://localhost:5000/reviews/meal/${id}`,{
+      const revRes = await fetch(`https://urban-eats-backend.vercel.app/reviews/meal/${id}`,{
         credentials: "include",
       });
       const revData = await revRes.json();
 
-      console.log(revData);
-      
+     
       setReviews(revData.data || []);
     } catch (err: any) {
       console.error(err);
@@ -86,7 +85,7 @@ export default function MealDetails() {
   const handleAddToCart = async () => {
     if (!meal?.isAvailable) return;
     try {
-      const res = await fetch("http://localhost:5000/orders", {
+      const res = await fetch("https://urban-eats-backend.vercel.app/orders", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -100,8 +99,10 @@ export default function MealDetails() {
       if (!res.ok) throw new Error(data.message || "Failed to add to cart");
       toast.success("Meal added to cart ");
     } catch (err: any) {
+      // redirect('/login')
       console.error(err);
       toast.error(err.message || "Failed to add to cart");
+      // redirect('/login')
     }
   };
 
@@ -111,7 +112,7 @@ export default function MealDetails() {
     if (!orderId) return toast.error("Cannot submit review: order ID missing");
 
     try {
-      const res = await fetch(`http://localhost:5000/reviews`, {
+      const res = await fetch(`https://urban-eats-backend.vercel.app/reviews`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -119,7 +120,7 @@ export default function MealDetails() {
           mealId: meal?.id,
           rating: userRating,
           comment: userComment,
-          orderId: orderId, // important!
+          orderId: orderId, 
         }),
       });
       const data = await res.json();
@@ -127,7 +128,7 @@ export default function MealDetails() {
       toast.success("Review submitted successfully ");
       setUserRating(0);
       setUserComment("");
-      fetchMeal(); // refresh reviews
+      fetchMeal(); 
     } catch (err: any) {
       console.error(err);
       toast.error(err.message || "Error submitting review");

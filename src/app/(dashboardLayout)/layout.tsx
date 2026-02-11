@@ -25,6 +25,10 @@ export default async function DashboardLayout({admin,customer,provider}:{
 
   const {data}= await UserService.getSession()
 
+ console.log('data is',data);
+ 
+  
+
  
 if (!data?.user) {
   redirect("/login");
@@ -38,7 +42,7 @@ const userInfo = data.user;
       </div>
     );
   }
-  console.log('dshboad',data);
+ 
 
   
   return (

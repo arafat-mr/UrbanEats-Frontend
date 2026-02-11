@@ -36,7 +36,7 @@ export default function ProviderDetails() {
 
   const fetchProviderDetails = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/providers/${providerId}`, {
+      const res = await fetch(`https://urban-eats-backend.vercel.app/api/providers/${providerId}`, {
         credentials: "include",
       });
       const data = await res.json();
@@ -56,7 +56,7 @@ export default function ProviderDetails() {
 
   const handleAddToCart = async (meal: Meal) => {
     try {
-      const res = await fetch("http://localhost:5000/orders", {
+      const res = await fetch("https://urban-eats-backend.vercel.app/orders", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },

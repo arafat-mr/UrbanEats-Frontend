@@ -35,7 +35,7 @@ type Category = {
     try {
       setLoading(true);
       const res = await fetch(
-        `http://localhost:5000/api/admin/categories/${category.id}`,
+        `https://urban-eats-backend.vercel.app/api/admin/categories/${category.id}`,
         {
           method: "PATCH",
           credentials: "include",

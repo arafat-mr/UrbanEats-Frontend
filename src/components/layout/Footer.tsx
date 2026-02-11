@@ -64,7 +64,7 @@ export default function Footer() {
       </div>
 
       <div className="mt-12 border-t border-gray-300 dark:border-gray-700 pt-6 text-center text-sm md:text-base">
-        &copy; {new Date().getFullYear()} UrbanEats. All rights reserved.
+        &copy; 2026 UrbanEats. All rights reserved.
       </div>
     </footer>
   );

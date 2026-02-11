@@ -14,7 +14,7 @@ export const UserService = {
   console.log(cookieStore.toString());
   
   
-  const res = await fetch(`${AUTH_URL}/get-session`,{
+  const res = await fetch(`https://urban-eats-backend.vercel.app/api/auth/get-session`,{
     headers :{
       Cookie :cookieStore.toString()
     },

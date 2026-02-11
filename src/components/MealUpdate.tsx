@@ -49,7 +49,7 @@ export function MealUpdate({ meal, onClose, onUpdated }: Props) {
       const toastId = toast.loading("Updating meal...");
       try {
         const res = await fetch(
-          `http://localhost:5000/api/provider/meals/${meal.id}`,
+          `https://urban-eats-backend.vercel.app/api/provider/meals/${meal.id}`,
           {
             method: "PATCH",
             credentials: "include",
@@ -61,7 +61,7 @@ export function MealUpdate({ meal, onClose, onUpdated }: Props) {
         );
 
         const data = await res.json();
-        console.log(data);
+        
 
         if (!res.ok) {
           toast.error(data?.message || "Update failed", { id: toastId });

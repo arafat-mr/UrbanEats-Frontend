@@ -4,6 +4,7 @@
 
 import { Meal } from "@/types/types";
 import MealCard from "./MealCard";
+import HotDealsSection from "../HotDeals";
 
 export default function NewMeals({ meals }: { meals: Meal[] }) {
   return (
@@ -15,6 +16,7 @@ export default function NewMeals({ meals }: { meals: Meal[] }) {
           <MealCard key={meal.id} meal={meal} />
         ))}
       </div>
+      {/* <HotDealsSection/> */}
     </section>
   );
 }

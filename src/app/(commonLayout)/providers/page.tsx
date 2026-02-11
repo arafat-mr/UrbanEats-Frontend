@@ -29,7 +29,7 @@ export default function ProvidersPage() {
 
   const fetchProviders = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/providers", {
+      const res = await fetch("https://urban-eats-backend.vercel.app/api/providers", {
         credentials: "include", // if you have cookies/auth
       });
       const data = await res.json();

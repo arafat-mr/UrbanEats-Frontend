@@ -51,7 +51,7 @@ export function UpdateProfileModal({ user, onClose, onUpdated }: Props) {
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Updating profile...");
       try {
-        const res = await fetch("http://localhost:5000/api/me/update", {
+        const res = await fetch("https://urban-eats-backend.vercel.app/api/auth/get-session/update", {
           method: "PATCH",
           credentials: "include",
           headers: {

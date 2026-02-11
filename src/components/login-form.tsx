@@ -39,7 +39,7 @@ export function LoginForm({ className, ...props }: Props) {
     onSubmit: async ({ value }) => {
       const toastId = toast.loading("Logging in...")
       try {
-        const res = await fetch("http://localhost:5000/api/auth/sign-in/email", {
+        const res = await fetch("https://urban-eats-backend.vercel.app/api/auth/sign-in/email", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(value),

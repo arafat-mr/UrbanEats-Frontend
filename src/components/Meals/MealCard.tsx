@@ -23,7 +23,7 @@ export default function MealCard({ meal }: { meal: Meal }) {
         ],
       };
 
-      const res = await fetch("http://localhost:5000/orders", {
+      const res = await fetch("https://urban-eats-backend.vercel.app/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,12 +35,12 @@ export default function MealCard({ meal }: { meal: Meal }) {
       const data = await res.json();
 
       if (!res.ok) {
-        toast.error(data.message || "Failed to add to cart");
+        toast.error("Failed to add to cart! Please login first");
         return;
       }
 
       toast.success("Added to cart successfully");
-      console.log("Order created:", data.data);
+    
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong");

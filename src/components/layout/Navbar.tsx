@@ -14,6 +14,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
 import { Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { UserService } from '@/services/user.service';
 
 interface MenuItem {
   title: string;
@@ -56,15 +57,19 @@ export const Navbar = ({
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/me', {
+        // const {data} = await UserService.getSession()
+        const res = await fetch('https://urban-eats-backend.vercel.app/api/auth/get-session', {
           credentials: 'include',
         });
         if (!res.ok) {
           setUser(null);
           return;
         }
+        console.log('res is',res);
+        
         const data = await res.json();
         setUser(data.data || data);
+        // setUser(res)
       } catch (err) {
         setUser(null);
         console.error(err);
@@ -77,7 +82,7 @@ export const Navbar = ({
 
   const handleSignOut = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/auth/sign-out', {
+      const res = await fetch('https://urban-eats-backend.vercel.app/api/auth/sign-out', {
         method: 'POST',
         credentials: 'include',
       });
